@@ -67,4 +67,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void CollectSpirit()
+    {
+
+    }
+
 }
