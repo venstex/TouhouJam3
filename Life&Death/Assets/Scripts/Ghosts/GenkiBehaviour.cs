@@ -5,15 +5,31 @@ using UnityEngine;
 public class GenkiBehaviour : MonoBehaviour
 {
 
-    [Header("Starting velocity")]
+    [Header("Velocity")]
     [SerializeField]
-    private float startVelocity;
+    private float startVelocity = 0;
+
+    [SerializeField]
+    private float minVelocity = 0;
+
+    [SerializeField]
+    private float maxVelocity = 0;
+
+    [Header("Direction")]
+    [SerializeField]
+    private float startDirection = 0;
+
+    [SerializeField]
+    private float minDirection = 0;
+
+    [SerializeField]
+    private float maxDirection = 0;
 
     [Header("Modifiers")]
     [SerializeField]
-    private float modVelocity;
+    private float modVelocity = 0;
     [SerializeField]
-    private float modDirection;
+    private float modDirection = 0;
 
     [Header("Field limits")]
     [SerializeField]
@@ -36,11 +52,11 @@ public class GenkiBehaviour : MonoBehaviour
     void Update()
     {  
 
-        float newVelocity = getRandomVelocity();
+        float newVelocity = getRandomVelocity();        
         float newDirection = getRandomDirection();
 
         this.transform.Translate(0, 0, newVelocity * Time.deltaTime);
-        this.transform.Rotate(0, newDirection, 0);
+        this.transform.eulerAngles = new Vector3(0, newDirection, 0);
 
         this.currentVelocity = newVelocity;
         this.currentDirection = newDirection;
@@ -53,31 +69,48 @@ public class GenkiBehaviour : MonoBehaviour
         float randomRangeBottom = this.currentVelocity - this.modVelocity;
         float randomRangeTop = this.currentVelocity + this.modVelocity;
         float randomVelocityMod = Random.Range(randomRangeBottom, randomRangeTop);
+        
+        float newVelocity = randomVelocityMod;
 
-        if (randomVelocityMod<this.currentVelocity)
+        if (newVelocity < minVelocity)
         {
-            return this.currentVelocity - randomVelocityMod;
-        } else
-        {
-            return this.currentVelocity + randomVelocityMod;
+            newVelocity = minVelocity;
         }
+
+        if (newVelocity > maxVelocity)
+        {
+            newVelocity = maxVelocity;
+        }
+
+        return newVelocity;
     }
 
     private float getRandomDirection()
     {
-        float randomRangeBottom = this.currentDirection - this.modDirection;
-        float randomRangeTop = this.currentDirection + this.modDirection;
+        float modDirectionBias = 0;
+        Vector3 position = this.transform.position;
+
+        if (position.x > (LimitX / 1.1) ||
+            position.x < -(LimitX / 1.1) ||
+            position.z > (LimitZ / 1.1) ||
+            position.z < -(LimitZ / 1.1))
+        {
+            modDirectionBias = 180;
+        }
+
+        if (position.x == (-LimitX) ||
+            position.x == (LimitX) ||
+            position.z == (-LimitZ) ||
+            position.z == (LimitZ))
+        {
+            modDirectionBias = 180;
+        }
+
+        float randomRangeBottom = this.currentDirection - modDirectionBias;
+        float randomRangeTop = this.currentDirection + modDirectionBias;
         float randomDirectionMod = Random.Range(randomRangeBottom, randomRangeTop);
 
-        if (randomDirectionMod < this.currentDirection)
-        {
-            return this.currentDirection - randomDirectionMod;
-        }
-        else
-        {
-            return this.currentDirection + randomDirectionMod;
-        }
-        return 0;
+        return randomDirectionMod + modDirectionBias;
     }
 
     private float getStartDirection()
