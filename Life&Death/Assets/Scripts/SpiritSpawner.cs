@@ -22,7 +22,6 @@ public class SpiritSpawner : MonoBehaviour
     void Start()
     {
         Vector2 FloorBounds = LevelFloorForBounds.GetComponent<FloorBasedBounds>().GetBounds();
-        Debug.Log(FloorBounds);
         LimitX = FloorBounds.x;
         LimitZ = FloorBounds.y;
 
