@@ -26,39 +26,45 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal")* rotationSpeed;
+        HandleInput();
+        HandleBounds();
+    }
+
+    private void HandleInput()
+    {
+        float moveHorizontal = Input.GetAxis("Horizontal") * rotationSpeed;
         float moveVertical = Input.GetAxis("Vertical") * movementSpeed;
-        Debug.Log(moveHorizontal + " : " + moveVertical);
 
         this.transform.Translate(0, 0, moveVertical);
-        this.transform.Rotate(0,moveHorizontal,0);
+        this.transform.Rotate(0, moveHorizontal, 0);
 
         if (Input.GetKeyDown("space"))
         {
 
         }
+    }
 
-
-
+    private void HandleBounds()
+    {
         if (this.transform.position.z > LimitZ)
-        {
-            this.transform.position = new Vector3(this.transform.position.x,this.transform.position.y,LimitZ);
-        }
-
-        if (this.transform.position.z > -LimitZ)
         {
             this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, LimitZ);
         }
 
-        if (this.transform.position.z > LimitX)
+        if (this.transform.position.z < -LimitZ)
         {
-            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, LimitX);
+            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -LimitZ);
         }
 
-        if (this.transform.position.z > -LimitX)
+        if (this.transform.position.x > LimitX)
         {
-            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, LimitX);
+            this.transform.position = new Vector3(LimitX, this.transform.position.y, this.transform.position.z);
         }
 
+        if (this.transform.position.x < -LimitX)
+        {
+            this.transform.position = new Vector3(-LimitX, this.transform.position.y, this.transform.position.z);
+        }
     }
+
 }
