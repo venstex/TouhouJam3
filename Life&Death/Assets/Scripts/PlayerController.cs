@@ -11,15 +11,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float movementSpeed = 0.2f;
 
-    [SerializeField]
-    private float LimitZ = 5f;
-
-    [SerializeField]
-    private float LimitX = 5f;
+    public GameObject LevelFloorForBounds;
+    private float LimitZ;
+    private float LimitX;
 
     // Start is called before the first frame update
     void Start()
     {
+        Vector2 FloorBounds = LevelFloorForBounds.GetComponent<FloorBasedBounds>().GetBounds();
+        LimitX = FloorBounds.x;
+        LimitZ = FloorBounds.y;
 
     }
 
