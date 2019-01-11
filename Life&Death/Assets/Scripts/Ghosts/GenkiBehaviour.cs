@@ -31,14 +31,16 @@ public class GenkiBehaviour : MonoBehaviour
     [SerializeField]
     private float modDirection = 0;
 
+    [Header("Field limits")]
+    [SerializeField]
+    private float LimitZ = 5f;
+
+    [SerializeField]
+    private float LimitX = 5f;
+
     private float currentVelocity;
     private float currentDirection;
-
-    public GameObject LevelFloorForBounds;
-    private float LimitZ;
-    private float LimitX;
-
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -48,10 +50,7 @@ public class GenkiBehaviour : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        Vector2 FloorBounds = LevelFloorForBounds.GetComponent<FloorBasedBounds>().GetBounds();
-        LimitX = FloorBounds.x;
-        LimitZ = FloorBounds.y;
+    {  
 
         float newVelocity = getRandomVelocity();        
         float newDirection = getRandomDirection();
