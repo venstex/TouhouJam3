@@ -75,6 +75,7 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "Collect")
         {
             Destroy(other);
+            GameController.Score += 1;
         }
     }
 }
