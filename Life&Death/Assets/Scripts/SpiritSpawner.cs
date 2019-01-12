@@ -21,9 +21,9 @@ public class SpiritSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Vector2 FloorBounds = LevelFloorForBounds.GetComponent<FloorBasedBounds>().GetBounds();
-        LimitX = FloorBounds.x;
-        LimitZ = FloorBounds.y;
+        //Vector2 FloorBounds = LevelFloorForBounds.GetComponent<FloorBasedBounds>().GetBounds();
+        LimitX = GameController.HorizontalFloor;
+        LimitZ = GameController.VerticalFloor;
 
         InvokeRepeating("SpawnGenkiSpirit", 2f ,SpawnRateGenki);
         InvokeRepeating("SpawnOnryouSpirit", 2f ,SpawnRateOnryou);

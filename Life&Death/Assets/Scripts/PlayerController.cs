@@ -18,9 +18,9 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Vector2 FloorBounds = LevelFloorForBounds.GetComponent<FloorBasedBounds>().GetBounds();
-        LimitX = FloorBounds.x;
-        LimitZ = FloorBounds.y;
+        //Vector2 FloorBounds = LevelFloorForBounds.GetComponent<FloorBasedBounds>().GetBounds();
+        LimitX = GameController.HorizontalFloor;
+        LimitZ = GameController.VerticalFloor;
 
     }
 
@@ -76,6 +76,11 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(other);
             GameController.Score += 1;
+        }
+
+        if (other.tag == "Enemy")
+        {
+            GameController.StopGame();
         }
     }
 }
