@@ -7,40 +7,37 @@ public class GenkiBehaviour : MonoBehaviour
 
     [Header("Velocity")]
     [SerializeField]
-    private float startVelocity = 0;
+    private float startVelocity = 2;
 
     [SerializeField]
-    private float minVelocity = 0;
+    private float minVelocity = 1;
 
     [SerializeField]
-    private float maxVelocity = 0;
-
-    [Header("Direction")]
-    [SerializeField]
-    private float startDirection = 0;
-
-    [SerializeField]
-    private float minDirection = 0;
-
-    [SerializeField]
-    private float maxDirection = 0;
+    private float maxVelocity = 2;
 
     [Header("Modifiers")]
     [SerializeField]
-    private float modVelocity = 0;
+    private float modVelocity = 1;
     [SerializeField]
-    private float modDirection = 0;
+    private float modDirection = 1;
 
     [Header("Field limits")]
     [SerializeField]
-    private float LimitZ = 5f;
+    private float LimitZ = 20f;
 
     [SerializeField]
-    private float LimitX = 5f;
+    private float LimitX = 25f;
 
     private float currentVelocity;
     private float currentDirection;
-    
+
+    private bool isMovingAwayFromEdge = false;
+    private bool isMovingAwayFromEdgeDirectionLeft = true;
+
+    private bool isIgnoringTurningFrames = false;
+    private int ignoreTurningFrames = 20;
+    private int ignoreTurningFramesCounter = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,10 +47,25 @@ public class GenkiBehaviour : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {  
+    {
 
-        float newVelocity = getRandomVelocity();        
-        float newDirection = getRandomDirection();
+        float newVelocity = 0;
+        float newDirection = 0;
+
+        if (this.isMovingAwayFromEdge && (ignoreTurningFrames > ignoreTurningFramesCounter))
+        {
+            newVelocity = this.currentVelocity;
+            newDirection = this.currentDirection;
+            ignoreTurningFramesCounter++;
+        }
+        else
+        {
+            ignoreTurningFramesCounter = 0;
+            newVelocity = getRandomVelocity();
+            newDirection = getRandomDirection();
+        }
+
+
 
         this.transform.Translate(0, 0, newVelocity * Time.deltaTime);
         this.transform.eulerAngles = new Vector3(0, newDirection, 0);
@@ -86,6 +98,29 @@ public class GenkiBehaviour : MonoBehaviour
         return newVelocity;
     }
 
+    private void setMoveAway(bool isMoveAway)
+    {
+        if (!this.isMovingAwayFromEdge || !isMoveAway)
+        {
+            if (isMoveAway)
+            {
+                this.isMovingAwayFromEdge = true;
+                if (Random.value < 0.5f)
+                {
+                    isMovingAwayFromEdgeDirectionLeft = true;
+                }
+                else
+                {
+                    isMovingAwayFromEdgeDirectionLeft = false;
+                }
+            }
+            else
+            {
+                this.isMovingAwayFromEdge = false;
+            }
+        }        
+    }
+
     private float getRandomDirection()
     {
         float modDirectionBias = 0;
@@ -96,21 +131,36 @@ public class GenkiBehaviour : MonoBehaviour
             position.z > (LimitZ / 1.1) ||
             position.z < -(LimitZ / 1.1))
         {
-            modDirectionBias = 180;
-        }
-
-        if (position.x == (-LimitX) ||
-            position.x == (LimitX) ||
-            position.z == (-LimitZ) ||
-            position.z == (LimitZ))
+            setMoveAway(true);
+        } else
         {
-            modDirectionBias = 180;
+            setMoveAway(false);
         }
 
-        float randomRangeBottom = this.currentDirection - modDirectionBias;
-        float randomRangeTop = this.currentDirection + modDirectionBias;
-        float randomDirectionMod = Random.Range(randomRangeBottom, randomRangeTop);
+        if (this.isMovingAwayFromEdge)
+        {
+            if (isMovingAwayFromEdgeDirectionLeft)
+            {
+                modDirectionBias = -20;
+            } else
+            {
+                modDirectionBias = +20;
+            }
+            
+        }
 
+        //if (position.x == (-LimitX) ||
+        //position.x == (LimitX) ||
+        //position.z == (-LimitZ) ||
+        //position.z == (LimitZ))
+        //{
+        //    modDirectionBias = 180;
+        //}
+
+        float randomRangeBottom = (this.currentDirection - modDirection) - modDirectionBias;
+        float randomRangeTop = (this.currentDirection + modDirection) + modDirectionBias;
+        float randomDirectionMod = Random.Range(randomRangeBottom, randomRangeTop);
+        
         return randomDirectionMod + modDirectionBias;
     }
 
