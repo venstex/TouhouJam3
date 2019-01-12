@@ -62,6 +62,7 @@ public class GenkiBehaviour : MonoBehaviour
         this.currentDirection = newDirection;
 
         HandleBounds();
+        Hover();
     }
 
     private float getRandomVelocity()
@@ -141,5 +142,12 @@ public class GenkiBehaviour : MonoBehaviour
         {
             this.transform.position = new Vector3(-LimitX, this.transform.position.y, this.transform.position.z);
         }
+    }
+
+    void Hover()
+    {
+        Vector3 _position = this.transform.position;
+        float HoveringHeight = Mathf.Sin(Time.time);
+        this.transform.position = new Vector3(_position.x, HoveringHeight + 2f, _position.z);
     }
 }

@@ -4,39 +4,38 @@ using UnityEngine;
 
 public class OnryouBehaviour : MonoBehaviour
 {
-
+    public float speed = 0.001F;
     private GameObject Player;
 
+    public Vector3 destination;
 
     // Start is called before the first frame update
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
 
-        InvokeRepeating("MoveToPlayer",2f,2f);
+        InvokeRepeating("MoveToPlayer", 0f,2f/Time.time);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //float dist = Vector3.Distance(this.transform.position, Player.transform.position);
         Vector3.Angle(this.transform.position, Player.transform.position);
 
         Hover();
     }
 
-
     void MoveToPlayer()
     {
         this.transform.LookAt(Player.transform, Vector3.up);
-        this.transform.Translate(Vector3.forward);
 
+        transform.Translate(new Vector3(0,0,0.1f));
     }
 
     void Hover()
     {
         Vector3 _position = this.transform.position;
         float HoveringHeight = Mathf.Sin(Time.time);
-        this.transform.position = new Vector3(_position.x, HoveringHeight + 1f, _position.z);
+        this.transform.position = new Vector3(_position.x, HoveringHeight + 2f, _position.z);
     }
 }
