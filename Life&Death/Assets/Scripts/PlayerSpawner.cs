@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour
 {
-
     [SerializeField]
     private GameObject PlayerPrefab;
+
+    private Vector3 PlayerSpawnLocation;
 
     bool PlayerSpawned;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        PlayerSpawnLocation = new Vector3(0, 2, 0);
     }
 
     // Update is called once per frame
@@ -21,7 +22,8 @@ public class PlayerSpawner : MonoBehaviour
     {
         if (GameController.GameStarted && PlayerSpawned == false)
         {
-            Instantiate(PlayerPrefab);
+            Instantiate(PlayerPrefab, PlayerSpawnLocation , Quaternion.identity);
+            PlayerSpawned = true;
         }
     }
 }

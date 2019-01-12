@@ -5,14 +5,19 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    public GameObject Spawner;
 
     public static int Score;
     public static bool GameStarted;
+
+    public static float HorizontalFloor = 50;
+    public static float VerticalFloor = 40;
 
     public Text ScoreField;
     public Text TimeField;
 
     int PlayTime;
+    float ElapsedTime;
 
     // Start is called before the first frame update
     void Start()
@@ -23,11 +28,21 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PlayTime = Mathf.RoundToInt(Time.time);
+        if (GameStarted)
+        {
+            PlayTime = Mathf.RoundToInt(ElapsedTime += Time.deltaTime);
 
-        ScoreField.text = Score.ToString();
-        TimeField.text = PlayTime.ToString();
+            ScoreField.text = Score.ToString();
+            TimeField.text = PlayTime.ToString();
 
+            Spawner.SetActive(true);
+
+        }
+        else
+        {
+            ElapsedTime = 0;
+            Score = 0;
+        }
     }
 
     public void StartGame()
