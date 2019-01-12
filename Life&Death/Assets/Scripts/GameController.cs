@@ -16,7 +16,7 @@ public class GameController : MonoBehaviour
     public Text ScoreField;
     public Text TimeField;
 
-    int PlayTime;
+    public static int PlayTime;
     float ElapsedTime;
 
     GameObject ActiveSpawner;

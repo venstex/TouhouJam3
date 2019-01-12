@@ -14,7 +14,7 @@ public class OnryouBehaviour : MonoBehaviour
     {
         Player = GameObject.FindGameObjectWithTag("Player");
 
-        InvokeRepeating("MoveToPlayer", 0f,2f/Time.time);
+        InvokeRepeating("MoveToPlayer", 0f,2f/GameController.PlayTime);
     }
 
     // Update is called once per frame
@@ -23,6 +23,7 @@ public class OnryouBehaviour : MonoBehaviour
         Vector3.Angle(this.transform.position, Player.transform.position);
 
         Hover();
+
     }
 
     void MoveToPlayer()
