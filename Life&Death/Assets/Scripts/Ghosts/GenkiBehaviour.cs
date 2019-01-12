@@ -82,7 +82,7 @@ public class GenkiBehaviour : MonoBehaviour
         float randomRangeBottom = this.currentVelocity - this.modVelocity;
         float randomRangeTop = this.currentVelocity + this.modVelocity;
         float randomVelocityMod = Random.Range(randomRangeBottom, randomRangeTop);
-        
+
         float newVelocity = randomVelocityMod;
 
         if (newVelocity < minVelocity)
@@ -118,7 +118,11 @@ public class GenkiBehaviour : MonoBehaviour
             {
                 this.isMovingAwayFromEdge = false;
             }
+<<<<<<< HEAD
         }        
+=======
+        }
+>>>>>>> More-Enemy-Behaviour
     }
 
     private float getRandomDirection()
@@ -132,7 +136,12 @@ public class GenkiBehaviour : MonoBehaviour
             position.z < -(LimitZ / 1.1))
         {
             setMoveAway(true);
+<<<<<<< HEAD
         } else
+=======
+        }
+        else
+>>>>>>> More-Enemy-Behaviour
         {
             setMoveAway(false);
         }
@@ -142,11 +151,20 @@ public class GenkiBehaviour : MonoBehaviour
             if (isMovingAwayFromEdgeDirectionLeft)
             {
                 modDirectionBias = -20;
+<<<<<<< HEAD
             } else
             {
                 modDirectionBias = +20;
             }
             
+=======
+            }
+            else
+            {
+                modDirectionBias = +20;
+            }
+
+>>>>>>> More-Enemy-Behaviour
         }
 
         //if (position.x == (-LimitX) ||
@@ -156,6 +174,13 @@ public class GenkiBehaviour : MonoBehaviour
         //{
         //    modDirectionBias = 180;
         //}
+<<<<<<< HEAD
+=======
+
+        float randomRangeBottom = (this.currentDirection - modDirection) - modDirectionBias;
+        float randomRangeTop = (this.currentDirection + modDirection) + modDirectionBias;
+        float randomDirectionMod = Random.Range(randomRangeBottom, randomRangeTop);
+>>>>>>> More-Enemy-Behaviour
 
         float randomRangeBottom = (this.currentDirection - modDirection) - modDirectionBias;
         float randomRangeTop = (this.currentDirection + modDirection) + modDirectionBias;
