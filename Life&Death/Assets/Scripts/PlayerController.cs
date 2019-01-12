@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleInput()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal") * rotationSpeed;
+        float moveHorizontal = Input.GetAxisRaw("Horizontal") * rotationSpeed;
         float moveVertical = Input.GetAxis("Vertical") * movementSpeed;
 
         this.transform.Translate(0, 0, moveVertical);
