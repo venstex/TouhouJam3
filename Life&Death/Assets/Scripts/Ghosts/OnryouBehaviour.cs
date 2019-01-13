@@ -5,12 +5,15 @@ using UnityEngine;
 public class OnryouBehaviour : MonoBehaviour
 {
 
-    [Header("Field limits")]
-    [SerializeField]
-    private float LimitZ = 20f;
+    
+    //[Header("Field limits")]
+    //[SerializeField]
+    private float LimitZ;
 
-    [SerializeField]
-    private float LimitX = 25f;
+    //[SerializeField]
+    private float LimitX;
+    
+
 
     public float speed = 0.001F;
     private GameObject Player;
@@ -23,6 +26,9 @@ public class OnryouBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        LimitX = GameController.HorizontalFloor;
+        LimitZ = GameController.VerticalFloor;
+
         Player = GameObject.FindGameObjectWithTag("Player");
 
         InvokeRepeating("MoveToPlayer", 0f,2f/Time.time * Time.deltaTime);
@@ -41,6 +47,8 @@ public class OnryouBehaviour : MonoBehaviour
     void MoveToPlayer()
     {
 
+        float SpeedModifier = GameController.PlayTime / 5;
+
         if (isCtrlKeyDown)
         {
             this.transform.LookAt(2 * transform.position - Player.transform.position, Vector3.up);
@@ -52,10 +60,10 @@ public class OnryouBehaviour : MonoBehaviour
         //transform.Translate(new Vector3(0,0, 0.1f * Time.deltaTime));
         if (isShiftKeyDown || isCtrlKeyDown)
         {
-            transform.Translate(new Vector3(0, 0, 0.1f * Time.deltaTime * 2));
+            transform.Translate(new Vector3(0, 0, 0.1f * Time.deltaTime * 2 *SpeedModifier));
         } else
         {
-            transform.Translate(new Vector3(0, 0, 0.1f * Time.deltaTime));
+            transform.Translate(new Vector3(0, 0, 0.1f * Time.deltaTime * SpeedModifier));
         }
         HandleBounds();
     }
