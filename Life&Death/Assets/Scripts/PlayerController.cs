@@ -27,7 +27,6 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Vector2 FloorBounds = LevelFloorForBounds.GetComponent<FloorBasedBounds>().GetBounds();
         LimitX = GameController.HorizontalFloor;
         LimitZ = GameController.VerticalFloor;
 
