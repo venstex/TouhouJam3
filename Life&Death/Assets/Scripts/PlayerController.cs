@@ -16,10 +16,16 @@ public class PlayerController : MonoBehaviour
 
     private int genkiToBomb = 5;
 
+    [Header("Sounds")]
+    [SerializeField]
+    private AudioClip collectGenki = null;
+
+    [SerializeField]
+    private AudioClip scythSwing = null;
+
     private int genkiBombCounter = 0;
     private bool hasBomb = false;
 
-    public GameObject LevelFloorForBounds;
     private float LimitZ;
     private float LimitX;
 
@@ -31,7 +37,6 @@ public class PlayerController : MonoBehaviour
     {
         LimitX = GameController.HorizontalFloor;
         LimitZ = GameController.VerticalFloor;
-
     }
 
     // Update is called once per frame
@@ -87,6 +92,9 @@ public class PlayerController : MonoBehaviour
 
         if (other.tag == "Collect")
         {
+            GetComponent<AudioSource>().clip = this.collectGenki;
+            GetComponent<AudioSource>().Play();            
+
             Destroy(other);
             GameController.Score += 1;
 
@@ -108,10 +116,15 @@ public class PlayerController : MonoBehaviour
             updateGenkiCounter(0);
             hasBomb = false;
         }
+
     }
 
     private void slashGhosts()
     {
+
+        GetComponent<AudioSource>().clip = this.scythSwing;
+        GetComponent<AudioSource>().Play();
+
         Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, bombRadius);
 
         foreach (Collider ghost in hitColliders)
