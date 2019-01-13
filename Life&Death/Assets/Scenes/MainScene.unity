@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -639,10 +639,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1433225139}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 651391b1245397d47a1e8d923354166e, type: 3}
+  m_Script: {fileID: 11500000, guid: 4239482f9ecad40498e865a06a8f2f00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Spawner: {fileID: 2158722778300892886, guid: b13989ba72346b24eb7222dca35a312b, type: 3}
+  Spawner: {fileID: 2158722778300892886, guid: 84b0d41890332cd48802e5e4c3898a6a, type: 3}
   ScoreField: {fileID: 539288259}
   TimeField: {fileID: 1559088785}
 --- !u!1 &1519782467
@@ -862,7 +862,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 503b17281aa0a7946bab1bcd6b1400b0, type: 2}
+  - {fileID: 2100000, guid: 6f0f3b03fc716d34682bdd35e71ba97e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -899,7 +899,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1739374084}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2016734bf008f704b8d803895b15410b, type: 3}
+  m_Script: {fileID: 11500000, guid: 95071d75a8dab7a438af0d16b6f05774, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1832487520
