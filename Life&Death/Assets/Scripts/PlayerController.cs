@@ -106,9 +106,6 @@ public class PlayerController : MonoBehaviour
             genkiBombCounter = 0;
             hasBomb = false;
         }
-
-        print(genkiBombCounter+" "+ genkiToBomb + " " + hasBomb);
-
     }
 
     private void slashGhosts()
