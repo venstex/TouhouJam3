@@ -14,8 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float bombRadius = 5f;
 
-    [SerializeField]
-    private int genkiToBomb = 10;
+    private int genkiToBomb = 5;
 
     private int genkiBombCounter = 0;
     private bool hasBomb = false;
@@ -23,6 +22,9 @@ public class PlayerController : MonoBehaviour
     public GameObject LevelFloorForBounds;
     private float LimitZ;
     private float LimitX;
+
+    [SerializeField]
+    Animator m_Animator;
 
     // Start is called before the first frame update
     void Start()
@@ -90,7 +92,8 @@ public class PlayerController : MonoBehaviour
 
             if (genkiBombCounter<genkiToBomb)
             {
-                updateGenkiCounter(genkiBombCounter++);
+                genkiBombCounter += 1;
+                updateGenkiCounter(genkiBombCounter);
             }
 
             if (genkiBombCounter>= genkiToBomb)
@@ -124,6 +127,9 @@ public class PlayerController : MonoBehaviour
                 Destroy(ghost.gameObject);
             }
         }
+
+        m_Animator.SetTrigger("Bomb");
+
         updateGenkiCounter(0);
         hasBomb = false;
     }
@@ -131,5 +137,7 @@ public class PlayerController : MonoBehaviour
     private void updateGenkiCounter(int genkiCounter)
     {
         this.genkiBombCounter = genkiCounter;
+        GameController.GenkiCharge = genkiCounter;
+
     }
 }

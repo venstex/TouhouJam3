@@ -354,6 +354,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 5
   movementSpeed: 0.2
+  bombRadius: 5
+  LevelFloorForBounds: {fileID: 0}
+  m_Animator: {fileID: 1946651416}
 --- !u!135 &3464657528338103134
 SphereCollider:
   m_ObjectHideFlags: 0
