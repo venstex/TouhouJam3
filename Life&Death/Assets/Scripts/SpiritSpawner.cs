@@ -55,7 +55,6 @@ public class SpiritSpawner : MonoBehaviour
         }
 
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        print(enemies.Length);
         if (enemies.Length >= maxEnemies)
         {
             stopSpawningEnemies = true;
@@ -126,7 +125,6 @@ public class SpiritSpawner : MonoBehaviour
             ghost_z <= maxZ &&
             ghost_z > minZ)
         {
-            print("maxX: "+ghost_x + " " + maxX);
             return true;
         }
         return false;       

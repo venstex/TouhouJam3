@@ -5,6 +5,8 @@ using UnityEngine;
 public class GenkiBehaviour : MonoBehaviour
 {
 
+    private GameObject Player;
+
     [Header("Velocity")]
     [SerializeField]
     private float startVelocity = 2;
@@ -14,6 +16,9 @@ public class GenkiBehaviour : MonoBehaviour
 
     [SerializeField]
     private float maxVelocity = 2;
+
+    [SerializeField]
+    private float pullAndPushSpeed = 2;
 
     [Header("Modifiers")]
     [SerializeField]
@@ -37,9 +42,15 @@ public class GenkiBehaviour : MonoBehaviour
     private int ignoreTurningFrames = 20;
     private int ignoreTurningFramesCounter = 0;
 
+    bool isShiftKeyDown = false;
+    bool isCtrlKeyDown = false;
+
+    
+
     // Start is called before the first frame update
     void Start()
     {
+        Player = GameObject.FindGameObjectWithTag("Player");
         this.currentVelocity = startVelocity;
         this.currentDirection = getStartDirection();
     }
@@ -47,6 +58,17 @@ public class GenkiBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        isShiftKeyDown = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+        isCtrlKeyDown = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
+
+        if (isShiftKeyDown || isCtrlKeyDown)
+        {
+            MoveToPlayer();
+            HandleBounds();
+            Hover();
+            return;
+        }
 
         float newVelocity = 0;
         float newDirection = 0;
@@ -192,5 +214,24 @@ public class GenkiBehaviour : MonoBehaviour
         Vector3 _position = this.transform.position;
         float HoveringHeight = Mathf.Sin(Time.time);
         this.transform.position = new Vector3(_position.x, HoveringHeight + 2f, _position.z);
+    }
+
+    void MoveToPlayer()
+    {
+
+        if (isCtrlKeyDown)
+        {
+            this.transform.LookAt(2 * transform.position - Player.transform.position, Vector3.up);
+        }
+        else
+        {
+            this.transform.LookAt(Player.transform, Vector3.up);
+        }
+        
+        if (isShiftKeyDown || isCtrlKeyDown)
+        {
+            transform.Translate(new Vector3(0, 0, pullAndPushSpeed * Time.deltaTime * 2));
+        }
+
     }
 }
