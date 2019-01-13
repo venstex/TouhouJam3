@@ -10,18 +10,28 @@ public class SpiritSpawner : MonoBehaviour
     private float LimitX;
 
     [SerializeField]
-    private float SpawnRateGenki;
+    private float SpawnRateGenki = 1;
     public Transform Genki;
 
+    [SerializeField]
+    private float SpawnRateOnryou = 1;
+    public Transform Onryou;
 
     [SerializeField]
-    private float SpawnRateOnryou;
-    public Transform Onryou;
+    private float minSpawnRadius = 3;
+
+    [SerializeField]
+    private float maxEnemies = 50;
+
+    private bool stopSpawningEnemies = false;
 
     private GameObject[] players;
     private Vector3 playerLocation;
 
-    private float minSpawnRadius = 3;
+    private GameObject[] enemies;
+
+    private int spawnCounter = 0;
+    private int maxSpawnCounter = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +53,17 @@ public class SpiritSpawner : MonoBehaviour
         {
             playerLocation = player.transform.position;
         }
+
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        print(enemies.Length);
+        if (enemies.Length >= maxEnemies)
+        {
+            stopSpawningEnemies = true;
+        }
+        else
+        {
+            stopSpawningEnemies = false;
+        }
     }
 
     void SpawnGenkiSpirit()
@@ -55,16 +76,28 @@ public class SpiritSpawner : MonoBehaviour
     void SpawnOnryouSpirit()
     {
         //Vector3 position = new Vector3(Random.Range(-LimitX, LimitX), 3, Random.Range(-LimitZ, LimitZ));        
-
-        Vector3 position = spawnNotTooCloseTooPlayer(playerLocation);
-
-        Instantiate(Onryou, position, Quaternion.identity);
+        if (!stopSpawningEnemies)
+        {
+            Vector3 position = spawnNotTooCloseTooPlayer(playerLocation);
+            Instantiate(Onryou, position, Quaternion.identity);
+        }
+        
     }
 
     Vector3 spawnNotTooCloseTooPlayer(Vector3 playerLocation)
     {
-        //print(playerLocation);
+
         Vector3 spawnLocation = new Vector3(Random.Range(-LimitX, LimitX), 3, Random.Range(-LimitZ, LimitZ));
+
+        if (spawnCounter>=maxSpawnCounter)
+        {
+            spawnCounter = 0;
+            return spawnLocation;
+        } else
+        {
+            spawnCounter++;
+        }
+
         if (isSpawnTooClose(spawnLocation, playerLocation))
         {
             return spawnNotTooCloseTooPlayer(playerLocation);
@@ -87,10 +120,6 @@ public class SpiritSpawner : MonoBehaviour
 
         float minZ = player_z - this.minSpawnRadius;
         float maxZ = player_z + this.minSpawnRadius;
-        print("maxX: " + ghost_x + " " + maxX);
-        print("minX: " + ghost_x + " " + minX);
-        print("maxZ: " + ghost_z + " " + maxZ);
-        print("minZ: " + ghost_z + " " + minZ);
         
         if (ghost_x <= maxX &&
             ghost_x > minX &&

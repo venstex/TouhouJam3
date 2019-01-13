@@ -50,8 +50,16 @@ public class GameController : MonoBehaviour
 
     public void StartGame()
     {
-        GameStarted = true;
-        ActiveSpawner = Instantiate(Spawner);
+        if (!GameStarted)
+        {
+            GameStarted = true;
+            ActiveSpawner = Instantiate(Spawner);
+        }        
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     public static void StopGame()

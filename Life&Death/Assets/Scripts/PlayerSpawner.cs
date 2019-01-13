@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerSpawner : MonoBehaviour
 {
     [SerializeField]
-    private GameObject PlayerPrefab;
+    private GameObject PlayerPrefab = null;
 
     private Vector3 PlayerSpawnLocation;
 

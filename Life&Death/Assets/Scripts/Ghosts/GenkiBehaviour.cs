@@ -33,8 +33,7 @@ public class GenkiBehaviour : MonoBehaviour
 
     private bool isMovingAwayFromEdge = false;
     private bool isMovingAwayFromEdgeDirectionLeft = true;
-
-    private bool isIgnoringTurningFrames = false;
+    
     private int ignoreTurningFrames = 20;
     private int ignoreTurningFramesCounter = 0;
 
