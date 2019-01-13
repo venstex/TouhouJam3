@@ -11,6 +11,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float movementSpeed = 0.2f;
 
+    [SerializeField]
+    private float bombRadius = 5f;
+
+    [SerializeField]
+    private int genkiToBomb = 10;
+
+    private int genkiBombCounter = 0;
+    private bool hasBomb = false;
+
+    public GameObject LevelFloorForBounds;
     private float LimitZ;
     private float LimitX;
 
@@ -26,7 +36,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         HandleInput();
-        HandleBounds();
+        HandleBounds();        
     }
 
     private void HandleInput()
@@ -39,7 +49,10 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown("space"))
         {
-
+            if (hasBomb)
+            {
+                slashGhosts();
+            }            
         }
     }
 
@@ -74,11 +87,49 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(other);
             GameController.Score += 1;
+
+            if (genkiBombCounter<genkiToBomb)
+            {
+                updateGenkiCounter(genkiBombCounter++);
+            }
+
+            if (genkiBombCounter>= genkiToBomb)
+            {
+                hasBomb = true;
+            }
         }
 
         if (other.tag == "Enemy")
         {
             GameController.StopGame();
+            updateGenkiCounter(0);
+            hasBomb = false;
         }
+    }
+
+    private void slashGhosts()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, bombRadius);
+
+        foreach (Collider ghost in hitColliders)
+        {
+            if (ghost.gameObject.tag=="Collect")
+            {
+                Destroy(ghost.gameObject);
+                GameController.Score -= 1;
+            }
+
+            if (ghost.gameObject.tag == "Enemy")
+            {
+                Destroy(ghost.gameObject);
+            }
+        }
+        updateGenkiCounter(0);
+        hasBomb = false;
+    }
+
+    private void updateGenkiCounter(int genkiCounter)
+    {
+        this.genkiBombCounter = genkiCounter;
     }
 }
