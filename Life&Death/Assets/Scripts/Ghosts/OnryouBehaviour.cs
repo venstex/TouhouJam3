@@ -12,8 +12,6 @@ public class OnryouBehaviour : MonoBehaviour
 
     //[SerializeField]
     private float LimitX;
-    
-
 
     public float speed = 0.001F;
     private GameObject Player;

@@ -6,12 +6,18 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     public GameObject Spawner;
+    public GameObject GameOverSound;
+
+    public GameObject TitleScreen = null;
+    public GameObject GameOverScreen = null;
 
     public static int Score;
     public static bool GameStarted;
 
     public static float HorizontalFloor = 1;
     public static float VerticalFloor = 1;
+
+    
 
     public Text ScoreField;
     public Text TimeField;
@@ -24,7 +30,8 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //GameOverScreen.SetActive(false);
+        GameOverScreen.GetComponent<Image>().enabled = false;
     }
 
     // Update is called once per frame
@@ -50,6 +57,8 @@ public class GameController : MonoBehaviour
 
     public void StartGame()
     {
+        this.TitleScreen.SetActive(false);
+        GameOverScreen.GetComponent<Image>().enabled = false;
         if (!GameStarted)
         {
             GameStarted = true;
@@ -64,6 +73,13 @@ public class GameController : MonoBehaviour
 
     public static void StopGame()
     {
+
+        GameObject GameOverScreenStatic = GameObject.FindGameObjectWithTag("gameoverscreen");
+        GameOverScreenStatic.GetComponent<Image>().enabled = true;
+
+        GameObject GameOverSoundStatic = GameObject.FindGameObjectWithTag("gameoversound");
+        GameOverSoundStatic.GetComponent<AudioSource>().Play();
+
         GameStarted = false;
 
         GameObject[] CleanEnemies = GameObject.FindGameObjectsWithTag("Enemy");
