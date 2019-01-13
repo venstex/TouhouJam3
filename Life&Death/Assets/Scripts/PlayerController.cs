@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         HandleInput();
-        HandleBounds();
+        HandleBounds();        
     }
 
     private void HandleInput()
@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
 
             if (genkiBombCounter<genkiToBomb)
             {
-                genkiBombCounter++;
+                updateGenkiCounter(genkiBombCounter++);
             }
 
             if (genkiBombCounter>= genkiToBomb)
@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "Enemy")
         {
             GameController.StopGame();
-            genkiBombCounter = 0;
+            updateGenkiCounter(0);
             hasBomb = false;
         }
     }
@@ -125,7 +125,12 @@ public class PlayerController : MonoBehaviour
                 Destroy(ghost.gameObject);
             }
         }
-        genkiBombCounter = 0;
+        updateGenkiCounter(0);
         hasBomb = false;
+    }
+
+    private void updateGenkiCounter(int genkiCounter)
+    {
+        this.genkiBombCounter = genkiCounter;
     }
 }
